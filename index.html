@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daniel Blanco Sánchez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f7fa;
+    --surface:#ffffff;
+    --fg:#101c33;
+    --muted:#57657d;
+    --line:#dde3ee;
+    --accent:#00399c;
+    --accent-ink:#ffffff;
+    --gold:#a8720a;
+    --gold-soft:#fbecd0;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --display:'Fraunces',Georgia,serif;
+    --body:'Source Sans 3',system-ui,sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b1220;
+      --surface:#121b2e;
+      --fg:#e9edf6;
+      --muted:#93a1ba;
+      --line:#233046;
+      --accent:#7fa8ff;
+      --accent-ink:#0b1220;
+      --gold:#f0b23c;
+      --gold-soft:#3a2e12;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1220;
+    --surface:#121b2e;
+    --fg:#e9edf6;
+    --muted:#93a1ba;
+    --line:#233046;
+    --accent:#7fa8ff;
+    --accent-ink:#0b1220;
+    --gold:#f0b23c;
+    --gold-soft:#3a2e12;
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--body);
+    padding-inline:20px;
+  }
+  a{color:var(--accent)}
+  .wrap{max-width:760px;margin:0 auto}
+
+  header.top{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    margin-inline:-20px;
+    padding-inline:20px;
+  }
+  .topbar{
+    max-width:760px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding-block:12px;gap:12px;
+  }
+  .brand{
+    font-family:var(--mono);font-size:.8rem;letter-spacing:.04em;color:var(--muted);
+    white-space:nowrap;
+  }
+  .brand b{color:var(--fg)}
+  nav.links{display:flex;gap:18px;flex-wrap:wrap}
+  nav.links a{
+    font-family:var(--mono);font-size:.78rem;color:var(--muted);text-decoration:none;
+    letter-spacing:.02em;
+  }
+  nav.links a:hover{color:var(--accent)}
+
+  .hero{
+    padding-block:56px 40px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .eyebrow{
+    font-family:var(--mono);font-size:.78rem;color:var(--gold);
+    letter-spacing:.06em;text-transform:uppercase;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2.1rem,6vw,3.1rem);
+    line-height:1.05;
+    margin:0;
+    text-wrap:balance;
+  }
+  .role{
+    font-size:1.05rem;color:var(--muted);max-width:52ch;
+  }
+  .role strong{color:var(--fg);font-weight:600}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+  .btn{
+    font-family:var(--body);font-weight:600;font-size:.92rem;
+    padding:10px 18px;border-radius:8px;text-decoration:none;
+    border:1px solid var(--line);
+  }
+  .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .btn.ghost{color:var(--fg)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  section{padding-block:38px;border-top:1px solid var(--line)}
+  .prompt{
+    font-family:var(--mono);font-size:.82rem;color:var(--muted);
+    display:flex;align-items:center;gap:8px;margin-bottom:16px;
+  }
+  .prompt::before{content:"$";color:var(--gold)}
+  h2{
+    font-family:var(--display);font-weight:600;font-size:1.5rem;margin:0 0 14px;
+  }
+  p{line-height:1.65;color:var(--fg)}
+  .muted{color:var(--muted)}
+
+  .skill-groups{display:grid;gap:18px;grid-template-columns:1fr 1fr}
+  @media (max-width:560px){.skill-groups{grid-template-columns:1fr}}
+  .skill-group h3{
+    font-family:var(--body);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 10px;font-weight:700;
+  }
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    font-family:var(--mono);font-size:.78rem;padding:5px 10px;border-radius:6px;
+    background:var(--surface);border:1px solid var(--line);color:var(--fg);
+  }
+
+  .timeline{display:flex;flex-direction:column;gap:0}
+  .tl-item{
+    position:relative;padding-left:26px;padding-bottom:26px;border-left:2px solid var(--line);
+  }
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:"";position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;
+    background:var(--surface);border:2px solid var(--accent);
+  }
+  .tl-item.current::before{background:var(--gold);border-color:var(--gold)}
+  .tl-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+  .tl-role{font-weight:700;font-size:1.02rem}
+  .tl-when{font-family:var(--mono);font-size:.76rem;color:var(--muted);white-space:nowrap}
+  .tl-org{color:var(--muted);font-size:.92rem;margin-bottom:6px}
+  .tl-item ul{margin:8px 0 0;padding-left:20px;color:var(--fg)}
+  .tl-item li{margin-bottom:4px;line-height:1.55}
+  .tag-current{
+    font-family:var(--mono);font-size:.68rem;color:var(--gold);background:var(--gold-soft);
+    padding:2px 8px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase;
+  }
+
+  .cert-groups{display:flex;flex-direction:column;gap:22px}
+  .cert-group h3{
+    font-size:.9rem;font-weight:700;margin:0 0 10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:560px){.cert-grid{grid-template-columns:1fr}}
+  .cert-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;
+  }
+  .cert-card .name{font-weight:600;font-size:.92rem;line-height:1.35}
+  .cert-card .meta{
+    font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:6px;
+    display:flex;justify-content:space-between;gap:6px;
+  }
+  .in-progress .cert-card{border-color:var(--gold);border-style:dashed}
+  .in-progress .cert-card .meta{color:var(--gold)}
+
+  .projects{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+  @media (max-width:560px){.projects{grid-template-columns:1fr}}
+  .project{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .project .ptitle{font-weight:700;font-size:.98rem}
+  .project .pstack{font-family:var(--mono);font-size:.7rem;color:var(--gold)}
+  .project p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.55}
+
+  .edu-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:16px 18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline;
+  }
+  .edu-card .school{font-weight:700}
+  .edu-card .status{font-family:var(--mono);font-size:.76rem;color:var(--gold)}
+
+  .contact-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .copy-field{
+    display:flex;align-items:center;gap:8px;background:var(--surface);
+    border:1px solid var(--line);border-radius:8px;padding:8px 12px;
+    font-family:var(--mono);font-size:.85rem;
+  }
+  .copy-btn{
+    font-family:var(--body);font-size:.76rem;font-weight:600;color:var(--accent);
+    background:none;border:none;cursor:pointer;padding:2px 6px;
+  }
+  .copy-btn:hover{text-decoration:underline}
+
+  footer{
+    padding-block:32px calc(28px + env(safe-area-inset-bottom,0px));
+    text-align:center;color:var(--muted);font-size:.8rem;font-family:var(--mono);
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion: no-preference){
+    .btn, .chip, a{transition:border-color .15s ease, color .15s ease}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="topbar">
+      <span class="brand"><b>Daniel</b> Blanco Sánchez</span>
+      <nav class="links">
+        <a href="#about">acerca</a>
+        <a href="#skills">skills</a>
+        <a href="#experience">experiencia</a>
+        <a href="#certifications">certificados</a>
+        <a href="#contact">contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <span class="eyebrow">Bogotá, Colombia</span>
+    <h1>Daniel Blanco Sánchez</h1>
+    <p class="role">Estudiante de <strong>Ingeniería de Sistemas y Computación</strong> en la Universidad Católica de Colombia. Trabajo entre la <strong>ciberseguridad</strong> y el <strong>desarrollo de software</strong> — aseguro redes de día, construyo aplicaciones de Python y Java de noche.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#contact">Contactar</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/daniel-blanco-sanchez" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="prompt">~/about</div>
+    <h2>Acerca de mí</h2>
+    <p>Empecé por las redes: Cisco Networking Academy me dio las bases de infraestructura y seguridad (CCNA, IT Essentials) antes de que empezara la carrera. Hoy combino esa base con el desarrollo de software — Python, Java y tecnologías web — en proyectos universitarios y trabajo real para clientes a través de <strong>Soluciones Dased</strong>.</p>
+    <p>Actualmente trabajo medio tiempo como <strong>consultor de ciberseguridad</strong> en una entidad del sector público, apoyando administración de amenazas, defensa de red y seguridad de terminales. Me interesa especialmente el punto donde la lógica de programar y la lógica de asegurar un sistema se cruzan: ambas exigen pensamiento estructurado, resolución de problemas y análisis crítico.</p>
+  </section>
+
+  <section id="skills">
+    <div class="prompt">~/skills --list</div>
+    <h2>Habilidades</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Desarrollo de software</h3>
+        <div class="chip-row">
+          <span class="chip">Python</span>
+          <span class="chip">Java</span>
+          <span class="chip">HTML/CSS/JS</span>
+          <span class="chip">POO</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Redes &amp; ciberseguridad</h3>
+        <div class="chip-row">
+          <span class="chip">CCNA</span>
+          <span class="chip">IT Essentials</span>
+          <span class="chip">Admin. de amenazas</span>
+          <span class="chip">Defensa de red</span>
+          <span class="chip">Seguridad de terminales</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Datos &amp; IA</h3>
+        <div class="chip-row">
+          <span class="chip">Fundamentos de ciencia de datos</span>
+          <span class="chip">Conceptos de IA</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Habilidades blandas</h3>
+        <div class="chip-row">
+          <span class="chip">Pensamiento lógico</span>
+          <span class="chip">Resolución de problemas</span>
+          <span class="chip">Análisis crítico</span>
+          <span class="chip">Inglés técnico</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="prompt">~/experience --log</div>
+    <h2>Experiencia</h2>
+    <div class="timeline">
+      <div class="tl-item current">
+        <div class="tl-head">
+          <span class="tl-role">Consultor de Ciberseguridad <span class="tag-current">Actual</span></span>
+          <span class="tl-when">Medio tiempo</span>
+        </div>
+        <div class="tl-org">Entidad del sector público</div>
+        <ul>
+          <li>Administración de amenazas y monitoreo de alertas de seguridad.</li>
+          <li>Defensa de red y aseguramiento de infraestructura.</li>
+          <li>Seguridad de terminales bajo el marco de formación MinTIC AvanzaTIC.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-head">
+          <span class="tl-role">Desarrollador</span>
+          <span class="tl-when">Freelance</span>
+        </div>
+        <div class="tl-org">Soluciones Dased</div>
+        <ul>
+          <li>Desarrollo de sitios web corporativos y cotizaciones para clientes.</li>
+          <li>Diseño de soluciones backend a la medida.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="prompt">~/projects --recent</div>
+    <h2>Proyectos</h2>
+    <div class="projects">
+      <div class="project">
+        <span class="ptitle">Cato-Recomienda</span>
+        <span class="pstack">Python · FastAPI · SQLite · Azure</span>
+        <p>Aplicación de recomendación de restaurantes con backend propio, desplegada en la nube.</p>
+      </div>
+      <div class="project">
+        <span class="ptitle">WBill$</span>
+        <span class="pstack">Desarrollo web</span>
+        <p>Auditoría de seguridad y lógica full-stack sobre una app de finanzas personales.</p>
+      </div>
+      <div class="project">
+        <span class="ptitle">Simulador de Planificación</span>
+        <span class="pstack">JavaScript · p5.js</span>
+        <p>Visualización interactiva de algoritmos de planificación de procesos (FCFS, SJF, SRTF, RR).</p>
+      </div>
+      <div class="project">
+        <span class="ptitle">Tanque Oscilante</span>
+        <span class="pstack">Arduino · Modelado físico</span>
+        <p>Tanque robótico que modela movimiento armónico y superficies cuádricas para un proyecto de Física.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="prompt">~/certifications --all</div>
+    <h2>Certificaciones</h2>
+    <div class="cert-groups">
+      <div class="cert-group">
+        <h3>Cisco Networking Academy</h3>
+        <div class="cert-grid">
+          <div class="cert-card"><div class="name">CCNA: Introduction to Networks</div><div class="meta"><span>Certificado</span><span>Nov 2024</span></div></div>
+          <div class="cert-card"><div class="name">IT Essentials</div><div class="meta"><span>Certificado</span><span>Nov 2024</span></div></div>
+          <div class="cert-card"><div class="name">English for IT 1</div><div class="meta"><span>Certificado</span><span>Nov 2024</span></div></div>
+          <div class="cert-card"><div class="name">Introducción a la Ciencia de Datos</div><div class="meta"><span>Certificado</span><span>2024</span></div></div>
+          <div class="cert-card"><div class="name">Introducción a Python y la Ciencia de Datos</div><div class="meta"><span>Módulo</span><span>Feb 2024</span></div></div>
+          <div class="cert-card"><div class="name">Tipos de Datos, Variables y Expresiones</div><div class="meta"><span>Módulo</span><span>May 2024</span></div></div>
+          <div class="cert-card"><div class="name">Carreras en Datos</div><div class="meta"><span>Módulo</span><span>Nov 2023</span></div></div>
+          <div class="cert-card"><div class="name">Conceptos de Inteligencia Artificial</div><div class="meta"><span>Módulo</span><span>Nov 2023</span></div></div>
+          <div class="cert-card"><div class="name">Recopilación de Datos</div><div class="meta"><span>Módulo</span><span>Oct 2023</span></div></div>
+          <div class="cert-card"><div class="name">Conceptos Básicos de Ciencia de Datos</div><div class="meta"><span>Módulo</span><span>Oct 2023</span></div></div>
+          <div class="cert-card"><div class="name">Networking Academy Learn-A-Thon</div><div class="meta"><span>Participante</span><span>Dic 2023</span></div></div>
+        </div>
+      </div>
+      <div class="cert-group in-progress">
+        <h3>MinTIC · AvanzaTIC <span class="tag-current">En curso</span></h3>
+        <div class="cert-grid">
+          <div class="cert-card"><div class="name">Administración de Amenazas</div><div class="meta"><span>Curso</span><span>Ene–May 2026</span></div></div>
+          <div class="cert-card"><div class="name">Defensa de la Red</div><div class="meta"><span>Curso</span><span>Ene–May 2026</span></div></div>
+          <div class="cert-card"><div class="name">Seguridad de Terminales</div><div class="meta"><span>Curso</span><span>Ene–May 2026</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="prompt">~/education</div>
+    <h2>Educación</h2>
+    <div class="edu-card">
+      <div>
+        <div class="school">Universidad Católica de Colombia</div>
+        <div class="muted">Facultad de Ingeniería · Ingeniería de Sistemas y Computación</div>
+      </div>
+      <span class="status">En curso</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="prompt">~/contact</div>
+    <h2>Hablemos</h2>
+    <p class="muted">Abierto a oportunidades y colaboraciones en ciberseguridad y desarrollo de software.</p>
+    <div class="contact-row">
+      <div class="copy-field">
+        <span id="email-text">danielblanco190407@gmail.com</span>
+        <button class="copy-btn" id="copy-email" type="button">Copiar</button>
+      </div>
+      <a class="btn ghost" href="https://www.linkedin.com/in/daniel-blanco-sanchez" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <span id="year"></span> · Daniel Blanco Sánchez
+  </footer>
+</div>
+
+<script>
+  (function(){
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    var btn = document.getElementById('copy-email');
+    var emailText = document.getElementById('email-text').textContent.trim();
+    btn.addEventListener('click', function(){
+      function fallback(){
+        var range = document.createRange();
+        range.selectNode(document.getElementById('email-text'));
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(emailText).then(function(){
+          btn.textContent = 'Copiado';
+          setTimeout(function(){ btn.textContent = 'Copiar'; }, 1600);
+        }).catch(fallback);
+      } else {
+        fallback();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
